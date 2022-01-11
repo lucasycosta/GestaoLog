@@ -1,4 +1,4 @@
-package com.seussh.gestaoLog.domain.enums;
+package com.zeussh.gestaoLog.domain.enums;
 
 public enum Funcionalidade {
 	LOGIN("Login"),

@@ -1,4 +1,4 @@
-package com.seussh.gestaoLog.config;
+package com.zeussh.gestaoLog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

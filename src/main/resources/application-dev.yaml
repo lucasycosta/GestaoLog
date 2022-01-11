@@ -1,7 +1,7 @@
 # DEFINICAO LOG DA APLICACAO
 logging:
    level:
-      br.com.lucas.projeto.escolaMaven: DEBUG
+      com.zeussh.gestaoLog: DEBUG
       org.springframework: INFO
             
 # DEFINICAO BANCO DE DADOS      

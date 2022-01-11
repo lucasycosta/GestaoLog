@@ -1,16 +1,16 @@
-package com.seussh.gestaoLog.service;
+package com.zeussh.gestaoLog.service;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.seussh.gestaoLog.domain.Registro;
-import com.seussh.gestaoLog.domain.enums.Funcionalidade;
-import com.seussh.gestaoLog.domain.enums.NivelAcesso;
-import com.seussh.gestaoLog.repository.RegistroRepository;
+import com.zeussh.gestaoLog.domain.Registro;
+import com.zeussh.gestaoLog.repository.RegistroRepository;
 
+@Service
 public class RegistroService {
 
 	@Autowired
@@ -30,7 +30,7 @@ public class RegistroService {
 		// TODO Auto-generated method stub
 		return registroRepository.findById(id_usuario).orElse(null);
 	}
-
+/*
 	public Registro buscarPorNome(String nome_usuario) {
 		// TODO Auto-generated method stub
 		return registroRepository.findByNome(nome_usuario);
@@ -50,5 +50,5 @@ public class RegistroService {
 		// TODO Auto-generated method stub
 		return registroRepository.findByFuncionalidade(funcionalidade);
 	}
-
+*/
 }

@@ -1,4 +1,4 @@
-package com.seussh.gestaoLog.controller;
+package com.zeussh.gestaoLog.controller;
 
 import java.util.List;
 
@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.seussh.gestaoLog.domain.Registro;
-import com.seussh.gestaoLog.domain.enums.Funcionalidade;
-import com.seussh.gestaoLog.domain.enums.NivelAcesso;
-import com.seussh.gestaoLog.service.RegistroService;
+import com.zeussh.gestaoLog.domain.Registro;
+import com.zeussh.gestaoLog.service.RegistroService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,7 +50,7 @@ public class RegistroController {
 		
 		return registroService.buscarPorId(id_usuario);
 	}
-	
+	/*
 	@GetMapping(value = "/{nome_usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Registro buscarPorNome(@PathVariable String nome_usuario) {
 		
@@ -84,4 +82,5 @@ public class RegistroController {
 		
 		return registroService.buscarPelaFuncionalidade(funcionalidade);
 	}
+	*/
 }

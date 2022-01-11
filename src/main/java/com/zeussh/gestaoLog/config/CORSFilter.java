@@ -1,4 +1,4 @@
-package com.seussh.gestaoLog.config;
+package com.zeussh.gestaoLog.config;
 
 import java.io.IOException;
 

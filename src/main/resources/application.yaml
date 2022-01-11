@@ -1,11 +1,11 @@
 # DEFINICAO LOG DA APLICACAO
 info:
   app:
-    name: Projeto Escola
+    name: Projeto Gestao de Log
 
 spring:
    application:
-      name: projeto.escolaMaven
+      name: gestaoLog
 
    profiles:
       active: default, dev
