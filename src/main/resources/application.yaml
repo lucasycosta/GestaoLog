@@ -1,0 +1,11 @@
+# DEFINICAO LOG DA APLICACAO
+info:
+  app:
+    name: Projeto Escola
+
+spring:
+   application:
+      name: projeto.escolaMaven
+
+   profiles:
+      active: default, dev
