@@ -2,12 +2,9 @@
 package com.seussh.gestaoLog.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -15,9 +12,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.TransactionSystemException;
-
 import com.seussh.gestaoLog.domain.Registro;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
