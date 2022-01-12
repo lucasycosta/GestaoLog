@@ -2,9 +2,9 @@ package com.zeussh.gestaoLog.domain.enums;
 
 public enum NivelAcesso {
 	GERENTE("Gerente"),
-	MEDICO("Médico"),
+	MEDICO("Medico"),
 	ENFERMEIRA("Enfermeira"),
-	SECRETARIA("Scertária"),
+	SECRETARIA("Secretaria"),
 	PACIENTE("Paciente"),
 	AUXILIAR("Auxiliar"),
 	EQUIPE("Equipe");

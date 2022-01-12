@@ -1,33 +1,40 @@
 package com.zeussh.gestaoLog.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zeussh.gestaoLog.domain.Registro;
+import com.zeussh.gestaoLog.domain.enums.Funcionalidade;
+import com.zeussh.gestaoLog.domain.enums.NivelAcesso;
+import com.zeussh.gestaoLog.repository.RegistroRepository;
 import com.zeussh.gestaoLog.service.RegistroService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("registro")
 public class RegistroController {
 	
 	@Autowired
 	private RegistroService registroService;
 	
-	@PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Autowired
+	private RegistroRepository registroRepository;
+	
+	@PostMapping(value = "cadastrar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Registro cadastrar(@RequestBody @Valid Registro registro) {
 		
 		log.info("**CONTROLLER - Cadastrar Registro de log");
@@ -35,7 +42,7 @@ public class RegistroController {
 		return registroService.cadastrar(registro);
 	}
 	
-	@GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "buscarTodos", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Registro> buscarTodos(){
 		
 		log.info("**CONTROLLER - Buscar registros");
@@ -43,44 +50,70 @@ public class RegistroController {
 		return registroService.buscarTodos();
 	}
 	
-	@GetMapping(value = "/{id_usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Registro buscarPorIdUsuario(@PathVariable Long id_usuario) {
+	@GetMapping(value = "buscarPorIdUsuario")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorIdUsuario(@RequestParam(name = "id_usuario") String id_usuario){
 		
-		log.info("**CONTROLLER - Buscar registros pelo id do usuario");
+		log.info("**CONTROLLER - Buscar por id do usuario");
 		
-		return registroService.buscarPorId(id_usuario);
-	}
-	/*
-	@GetMapping(value = "/{nome_usuario}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Registro buscarPorNome(@PathVariable String nome_usuario) {
+		List<Registro> registro = registroRepository.buscarPorIdUsuario(id_usuario);
 		
-		log.info("**CONTROLLER - Buscar registros pelo nome do usuario");
-		
-		return registroService.buscarPorNome(nome_usuario);
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Registro buscarPorIdUsuario(@PathVariable String email) {
+	@GetMapping(value = "buscarPorNome")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorNome(@RequestParam(name = "nome_usuario") String nome_usuario){
 		
-		log.info("**CONTROLLER - Buscar registros pelo email do usuario");
+		log.info("**CONTROLLER - Buscar por nome");
 		
-		return registroService.buscarPorEmail(email);
+		List<Registro> registro = registroRepository.buscarPorNome(nome_usuario);
+		
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{nivel}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Registro buscarPorNivel(@PathVariable NivelAcesso nivel) {
+	@GetMapping(value = "buscarPorEmail")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorEmail(@RequestParam(name = "email") String email){
 		
-		log.info("**CONTROLLER - Buscar registros pelo nivel de acesso");
+		log.info("**CONTROLLER - Buscar por email");
 		
-		return registroService.buscarPorNivel(nivel);
+		List<Registro> registro = registroRepository.buscarPorEmail(email);
+		
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{funcionalidade}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Registro buscarPorFuncionalidade(@PathVariable Funcionalidade funcionalidade) {
+	@GetMapping(value = "buscarPorNivel")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorNivel(@RequestParam(name = "nivel") NivelAcesso nivel){
 		
-		log.info("**CONTROLLER - Buscar registros pela funcionalidade");
+		log.info("**CONTROLLER - Buscar por nivel de acesso");
 		
-		return registroService.buscarPelaFuncionalidade(funcionalidade);
+		List<Registro> registro = registroRepository.buscarPorNivel(nivel);
+		
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
-	*/
+	
+	@GetMapping(value = "buscarPorFuncionalidade")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorFuncionalidade(@RequestParam(name = "funcionalidade") Funcionalidade funcionalidade){
+		
+		log.info("**CONTROLLER - Buscar por funcionalidade");
+		
+		List<Registro> registro = registroRepository.buscarPorFuncionalidade(funcionalidade);
+		
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "buscarPorData")
+	@ResponseBody
+	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(name = "data") LocalDate data){
+		
+		log.info("**CONTROLLER - Buscar por funcionalidade");
+		
+		List<Registro> registro = registroRepository.buscarPorData(data);
+		
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
+	}
+	
 }

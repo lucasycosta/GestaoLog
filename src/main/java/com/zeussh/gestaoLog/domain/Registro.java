@@ -25,12 +25,16 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.zeussh.gestaoLog.domain.enums.Funcionalidade;
 import com.zeussh.gestaoLog.domain.enums.NivelAcesso;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table
 @SuppressWarnings("serial")
 @Data
+@AllArgsConstructor                                                                                             
+@NoArgsConstructor
 public class Registro implements Serializable{
 	
 	@Id

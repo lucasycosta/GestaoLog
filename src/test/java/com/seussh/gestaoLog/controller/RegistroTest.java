@@ -2,9 +2,12 @@
 package com.seussh.gestaoLog.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.TransactionSystemException;
-import com.seussh.gestaoLog.domain.Registro;
+
+import com.zeussh.gestaoLog.controller.RegistroController;
+import com.zeussh.gestaoLog.domain.Registro;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,12 +32,12 @@ public class RegistroTest {
 	private Registro criarRegistro() {
 		log.debug("Registro Padrão");
 		Registro registro = new Registro();
-		registro.setId_usuario(1);
+		registro.setId_usuario("1");
 		registro.setNome_usuario("Lucas");
 		registro.setEmail("lucas@mail.com");
-		registro.setData_hora("01/01/2022 12:30:00");
-		registro.setNivel("Medico");
-		registro.setFuncionalidade("Cadastrar Exame");
+		registro.setData("01-01-2022");
+		registro.setNivel("MEDICO");
+		registro.setFuncionalidade("CADASTAR_MEDICAMENTO");
 	}
 	
 	private static Long id;
@@ -42,7 +48,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComIdUsuarioVazio");
 		log.debug("Cadastrando registro com ID do usuario vazio");
 		Registro registro = criarRegistro();
-		registro.setId_usuario();
+		registro.setId_usuario("");
 		
 		try {
 			log.info("Gravar Log");
@@ -167,7 +173,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComDataHoraVazia");
 		log.debug("Cadastrando registro com data/hora vazio");
 		Registro registro = criarRegistro();
-		registro.setData_hora("");
+		registro.setData("");
 		
 		try {
 			log.info("Gravar Log");
