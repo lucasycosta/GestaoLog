@@ -9,13 +9,13 @@ public enum NivelAcesso {
 	AUXILIAR("Auxiliar"),
 	EQUIPE("Equipe");
 	
-	private String acesso;
+	private String nivel_acesso;
 	
-	NivelAcesso(String acesso){
-		this.acesso = acesso;
+	NivelAcesso(String nivel_acesso){
+		this.nivel_acesso = nivel_acesso;
 	}
 	
-	public String getAcesso() {
-		return this.acesso;
+	public String getNivel_acesso() {
+		return this.nivel_acesso;
 	}
 }

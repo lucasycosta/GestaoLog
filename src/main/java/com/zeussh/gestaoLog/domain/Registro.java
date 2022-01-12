@@ -69,7 +69,7 @@ public class Registro implements Serializable{
 	@Enumerated(EnumType.STRING)
 	@Column(name="nivel_acesso")
 	@NotNull(message = "Este campo é obrigatorio")
-	private NivelAcesso nivel;
+	private NivelAcesso nivel_acesso;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="funcionalidade")

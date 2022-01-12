@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -85,11 +86,11 @@ public class RegistroController {
 	
 	@GetMapping(value = "buscarPorNivel")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorNivel(@RequestParam(name = "nivel") NivelAcesso nivel){
+	public ResponseEntity<List<Registro>> buscarPorNivel(@RequestParam(name = "nivel_acesso") NivelAcesso nivel_acesso){
 		
 		log.info("**CONTROLLER - Buscar por nivel de acesso");
 		
-		List<Registro> registro = registroRepository.buscarPorNivel(nivel);
+		List<Registro> registro = registroRepository.buscarPorNivel(nivel_acesso);
 		
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
@@ -107,9 +108,10 @@ public class RegistroController {
 	
 	@GetMapping(value = "buscarPorData")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(name = "data") LocalDate data){
-		
-		log.info("**CONTROLLER - Buscar por funcionalidade");
+	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(name = "data") 
+														@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate data){
+
+		log.info("**CONTROLLER - Buscar por data");
 		
 		List<Registro> registro = registroRepository.buscarPorData(data);
 		

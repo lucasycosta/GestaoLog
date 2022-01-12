@@ -21,10 +21,10 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 	@Query(value = "select u from Registro u where u.email like %?1%")
 	List<Registro> buscarPorEmail(String email);
 	
-	@Query(value = "select u from Registro u where u.nivel like %?1%")
-	List<Registro> buscarPorNivel(NivelAcesso nivel);
+	@Query(value = "select u from Registro u where nivel_acesso in (:nivel_acesso)")
+	List<Registro> buscarPorNivel(NivelAcesso nivel_acesso);
 	
-	@Query(value = "select u from Registro u where u.funcionalidade like %?1%")
+	@Query(value = "select u from Registro u where funcionalidade in (:funcionalidade)")
 	List<Registro> buscarPorFuncionalidade(Funcionalidade funcionalidade);
 	
 	@Query(value = "select u from Registro u where u.id_usuario like %?1%")
