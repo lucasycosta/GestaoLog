@@ -1,12 +1,11 @@
 package com.zeussh.gestaoLog.controller;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -64,11 +63,11 @@ public class RegistroController {
 	
 	@GetMapping(value = "buscarPorNome")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorNome(@RequestParam(name = "nome_usuario") String nome_usuario){
+	public ResponseEntity<List<Registro>> buscarPorNome(@RequestParam(name = "nomeUsuario") String nomeUsuario){
 		
 		log.info("**CONTROLLER - Buscar por nome");
 		
-		List<Registro> registro = registroRepository.buscarPorNome(nome_usuario);
+		List<Registro> registro = registroRepository.buscarPorNome(nomeUsuario);
 		
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
@@ -108,12 +107,11 @@ public class RegistroController {
 	
 	@GetMapping(value = "buscarPorData")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(name = "data") 
-														@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate data){
+	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(value = "dataHora") Instant dataHora){
 
 		log.info("**CONTROLLER - Buscar por data");
 		
-		List<Registro> registro = registroRepository.buscarPorData(data);
+		List<Registro> registro = registroRepository.buscarPorData(dataHora);
 		
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
