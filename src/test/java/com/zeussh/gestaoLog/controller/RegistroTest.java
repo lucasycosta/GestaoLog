@@ -2,7 +2,10 @@
 package com.zeussh.gestaoLog.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 
 import com.zeussh.gestaoLog.domain.Registro;
@@ -168,32 +172,7 @@ public class RegistroTest {
 			}
 		}
 	}
-	/*
-	@Order(1)
-	@Test
-	public void naoPossoCadastrarRegistroComDataHoraVazia() {
-		log.info("** TEST - naoPossoCadastrarRegistroComDataHoraVazia");
-		log.debug("Cadastrando registro com data/hora vazio");
-		Registro registro = criarRegistro();
-		registro.setData("");
-		
-		try {
-			log.info("Gravar Log");
-			registroC.cadastrar(registro);
-		} catch (Exception ex) {
-			log.info("Não foi possivel cadastrar");
-			Throwable cause = ((TransactionSystemException) ex).getRootCause();
-			if (cause instanceof ConstraintViolationException) {
-				Set<ConstraintViolation<?>> violations = ((ConstraintViolationException) cause)
-						.getConstraintViolations();
-				String campo = violations.iterator().next().getPropertyPath().toString();
-				String mensagem = violations.iterator().next().getMessage();
-				log.debug(campo + ": " + mensagem);
-				assertEquals("Este campo é obrigatorio", mensagem);
-			}
-		}
-	}
-	*/
+	
 	@Order(1)
 	@Test
 	public void naoPossoCadastrarRegistroComNivelAcessoVazio() {
@@ -242,5 +221,73 @@ public class RegistroTest {
 				assertEquals("Este campo é obrigatorio", mensagem);
 			}
 		}
+	}
+	
+	@Order(2)
+	@Test
+	public void devoCadastrarRegistro() {
+		log.info("** TEST - devoCadastrarRegistro");
+
+		log.debug("Incluindo um registro");
+		Registro registro = registroC.cadastrar(criarRegistro());
+		assertNotNull(registro.getId(), "id não nulo");
+	}
+	
+	@Order(3)
+	@Test
+	public void devoBuscarTodosRegistros() {
+		log.info("** TEST - devoBuscarTodosRegistros");
+
+		log.debug("Buscar todos os registros");
+		List<Registro> registro = registroC.buscarTodos();
+
+		int tamanho = registro.size();
+		assertNotEquals(0, tamanho, "Lista de registros igual a zero");
+		id = registro.get(tamanho - 1).getId();
+	}
+	
+	@Order(4)
+	@Test
+	public void devoBuscarPorIdUsuario() {
+		log.info("** TEST - devoBuscarPorIdUsuario");
+
+		log.debug("Buscar registro atraves do id de usuário");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorIdUsuario((long) 1);
+	}
+	
+	@Order(5)
+	@Test
+	public void devoBuscarPorNomeUsuario() {
+		log.info("** TEST - devoBuscarPorNomeUsuario");
+
+		log.debug("Buscar registro atraves do nome de usuário");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorNome("Lucas");
+	}
+	
+	@Order(5)
+	@Test
+	public void devoBuscarPorEmailUsuario() {
+		log.info("** TEST - devoBuscarPorEmailUsuario");
+
+		log.debug("Buscar registro atraves do email de usuário");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorEmail("lucas@mail.com");
+	}
+	
+	@Order(6)
+	@Test
+	public void devoBuscarPorNivelAcesso() {
+		log.info("** TEST - devoBuscarPorNivelAcesso");
+
+		log.debug("Buscar registro atraves do nivel de acesso");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorNivel(EnumNivelAcesso.MEDICO);
+	}
+	
+	@Order(7)
+	@Test
+	public void devoBuscarPorFuncionalidade() {
+		log.info("** TEST - devoBuscarPorFuncionalidade");
+
+		log.debug("Buscar registro atraves da funcionalidade");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorFuncionalidade(EnumFuncionalidade.LOGIN);
 	}
 }
