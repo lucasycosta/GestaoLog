@@ -1,7 +1,7 @@
 package com.zeussh.gestaoLog.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +19,8 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.zeussh.gestaoLog.domain.enums.Funcionalidade;
-import com.zeussh.gestaoLog.domain.enums.NivelAcesso;
+import com.zeussh.gestaoLog.domain.enums.EnumFuncionalidade;
+import com.zeussh.gestaoLog.domain.enums.EnumNivelAcesso;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,30 +42,30 @@ public class Registro implements Serializable{
 	
 	@Column(name="id_usuario")
 	@NotNull(message = "Este campo é obrigatorio")
-	private String id_usuario;
+	private Long idUsuario;
 	
 	@Column(name = "nome_usuario")
 	@NotBlank(message = "Este campo é obrigatorio")
-	@Pattern(regexp = "^[A-Z]+(.)*", message = "Nome Invalido")
+	@Pattern(regexp = "^[A-Z]+(.)*", message = "Nome de usuário invalido")
 	private String nomeUsuario;
 	
 	@Column(name="email")                                                                
-	@Email(message = "email invalido")                                                         
+	@Email(message = "E-mail invalido")                                                         
 	@NotBlank(message = "Este campo é obrigatorio") 
 	private String email;
 	
-	@Column(name="data_hora")
-	@DateTimeFormat()
-	private Instant dataHora = Instant.now();
+	@Column(name="data")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date data;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="nivel_acesso")
 	@NotNull(message = "Este campo é obrigatorio")
-	private NivelAcesso nivel_acesso;
+	private EnumNivelAcesso nivelAcesso;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="funcionalidade")
 	@NotNull(message = "Este campo é obrigatorio")
-	private Funcionalidade funcionalidade;
+	private EnumFuncionalidade funcionalidade;
 
 }

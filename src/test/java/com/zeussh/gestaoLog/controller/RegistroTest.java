@@ -1,5 +1,5 @@
-/*
-package com.seussh.gestaoLog.controller;
+
+package com.zeussh.gestaoLog.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.TransactionSystemException;
 
-import com.zeussh.gestaoLog.controller.RegistroController;
 import com.zeussh.gestaoLog.domain.Registro;
+import com.zeussh.gestaoLog.domain.enums.EnumFuncionalidade;
+import com.zeussh.gestaoLog.domain.enums.EnumNivelAcesso;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,12 +33,13 @@ public class RegistroTest {
 	private Registro criarRegistro() {
 		log.debug("Registro Padrão");
 		Registro registro = new Registro();
-		registro.setId_usuario("1");
-		registro.setNome_usuario("Lucas");
+		registro.setIdUsuario((long) 1);
+		registro.setNomeUsuario("Lucas");
 		registro.setEmail("lucas@mail.com");
-		registro.setData("01-01-2022");
-		registro.setNivel("MEDICO");
-		registro.setFuncionalidade("CADASTAR_MEDICAMENTO");
+		registro.setNivelAcesso(EnumNivelAcesso.MEDICO);
+		registro.setFuncionalidade(EnumFuncionalidade.LOGIN);
+		
+		return registro;
 	}
 	
 	private static Long id;
@@ -48,7 +50,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComIdUsuarioVazio");
 		log.debug("Cadastrando registro com ID do usuario vazio");
 		Registro registro = criarRegistro();
-		registro.setId_usuario("");
+		registro.setIdUsuario(null);
 		
 		try {
 			log.info("Gravar Log");
@@ -73,7 +75,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComNomeUsuarioVazio");
 		log.debug("Cadastrando registro com nome do usuario vazio");
 		Registro registro = criarRegistro();
-		registro.setNome_usuario("");
+		registro.setNomeUsuario("");
 		
 		try {
 			log.info("Gravar Log");
@@ -98,7 +100,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComNomeUsuarioInvalido");
 		log.debug("Cadastrando registro com nome do usuario invalido");
 		Registro registro = criarRegistro();
-		registro.setNome_usuario("lucas");
+		registro.setNomeUsuario("lucas");
 		
 		try {
 			log.info("Gravar Log");
@@ -166,7 +168,7 @@ public class RegistroTest {
 			}
 		}
 	}
-	
+	/*
 	@Order(1)
 	@Test
 	public void naoPossoCadastrarRegistroComDataHoraVazia() {
@@ -191,14 +193,14 @@ public class RegistroTest {
 			}
 		}
 	}
-	
+	*/
 	@Order(1)
 	@Test
 	public void naoPossoCadastrarRegistroComNivelAcessoVazio() {
 		log.info("** TEST - naoPossoCadastrarRegistroComNivelAcessoVazio");
 		log.debug("Cadastrando registro com nível de acesso vazio");
 		Registro registro = criarRegistro();
-		registro.setNivel("");
+		registro.setNivelAcesso(null);
 		
 		try {
 			log.info("Gravar Log");
@@ -223,7 +225,7 @@ public class RegistroTest {
 		log.info("** TEST - naoPossoCadastrarRegistroComFuncionalidadeVazio");
 		log.debug("Cadastrando registro com funcionalidade vazio");
 		Registro registro = criarRegistro();
-		registro.setFuncionalidade("");
+		registro.setFuncionalidade(null);
 		
 		try {
 			log.info("Gravar Log");
@@ -242,4 +244,3 @@ public class RegistroTest {
 		}
 	}
 }
-*/

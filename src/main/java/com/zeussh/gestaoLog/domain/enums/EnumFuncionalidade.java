@@ -1,6 +1,9 @@
 package com.zeussh.gestaoLog.domain.enums;
 
-public enum Funcionalidade {
+import lombok.Getter;
+import lombok.Setter;
+
+public enum EnumFuncionalidade {
 	LOGIN("Login"),
 	FECHAR_APP("Fechar app"),
 	ABRIR_APP("Abrir app"),
@@ -11,12 +14,14 @@ public enum Funcionalidade {
 	CADASTRAR_MEDICAMENTO("Cadastrar medicamento"),
 	SAIR("Sair");
 	
-	private String funcionalidade;
-	Funcionalidade(String funcionalidade){
-		this.funcionalidade = funcionalidade;
+	@Getter
+	@Setter
+	private String descricao;
+
+	private EnumFuncionalidade(String descricao) {
+		this.descricao = descricao;
 	}
 	
-	public String getFuncionalidade() {
-		return this.funcionalidade;
-	}
+	
+	
 }

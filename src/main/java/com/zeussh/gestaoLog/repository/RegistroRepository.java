@@ -1,6 +1,6 @@
 package com.zeussh.gestaoLog.repository;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -8,30 +8,33 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.zeussh.gestaoLog.domain.Registro;
-import com.zeussh.gestaoLog.domain.enums.Funcionalidade;
-import com.zeussh.gestaoLog.domain.enums.NivelAcesso;
+import com.zeussh.gestaoLog.domain.enums.EnumFuncionalidade;
+import com.zeussh.gestaoLog.domain.enums.EnumNivelAcesso;
 
 @Repository
 public interface RegistroRepository extends PagingAndSortingRepository<Registro, Long>{
 	
-	//HQL
-	//AO RETORNAR UM NOME, PODEM VIM OU MAIS DE UM, POR ISSO UMA LISTA
-	@Query(value = "select u from Registro u where nome_usuario in (:nomeUsuario)")
+	@Query(value = "FROM Registro r WHERE r.nomeUsuario LIKE %?1%")
 	List<Registro> buscarPorNome(String nomeUsuario);
 	
-	@Query(value = "select u from Registro u where email in (:email)")
+	@Query(value = "FROM Registro r WHERE r.email LIKE %?1%")
 	List<Registro> buscarPorEmail(String email);
 	
-	@Query(value = "select u from Registro u where nivel_acesso in (:nivel_acesso)")
-	List<Registro> buscarPorNivel(NivelAcesso nivel_acesso);
+	@Query(value = "FROM Registro r WHERE nivelAcesso IN (:nivelAcesso)")
+	List<Registro> buscarPorNivel(EnumNivelAcesso nivelAcesso);
 	
-	@Query(value = "select u from Registro u where funcionalidade in (:funcionalidade)")
-	List<Registro> buscarPorFuncionalidade(Funcionalidade funcionalidade);
+	@Query(value = "FROM Registro r WHERE funcionalidade IN (:funcionalidade)")
+	List<Registro> buscarPorFuncionalidade(EnumFuncionalidade funcionalidade);
 	
-	@Query(value = "select u from Registro u where u.id_usuario like %?1%")
-	List<Registro> buscarPorIdUsuario(String id_usuario);
+	@Query(value = "FROM Registro r WHERE r.idUsuario IN (:idUsuario)")
+	List<Registro> buscarPorIdUsuario(Long idUsuario);
 	
-	@Query(value = "select u from Registro u where data_hora <= :dataHora")
-	List<Registro> buscarPorData(Instant dataHora);
+	@Query(value = "FROM Registro r WHERE r.data >= :data")
+	List<Registro> buscarPorData(Date data);
 	
+	@Query(value = "SELECT funcionalidade, count(*) from Registro group by funcionalidade")
+	List<Object[]> buscarGraficoFuncionalidade();
+	
+	@Query(value = "SELECT nivelAcesso, count(*) from Registro group by nivelAcesso")
+	List<Object[]> buscarGraficoNivelAcesso();
 }

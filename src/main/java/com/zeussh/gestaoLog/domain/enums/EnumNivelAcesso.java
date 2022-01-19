@@ -1,6 +1,9 @@
 package com.zeussh.gestaoLog.domain.enums;
 
-public enum NivelAcesso {
+import lombok.Getter;
+import lombok.Setter;
+
+public enum EnumNivelAcesso {
 	GERENTE("Gerente"),
 	MEDICO("Medico"),
 	ENFERMEIRA("Enfermeira"),
@@ -9,13 +12,13 @@ public enum NivelAcesso {
 	AUXILIAR("Auxiliar"),
 	EQUIPE("Equipe");
 	
-	private String nivel_acesso;
-	
-	NivelAcesso(String nivel_acesso){
-		this.nivel_acesso = nivel_acesso;
+	@Getter
+	@Setter
+	private String descricao;
+
+	private EnumNivelAcesso(String descricao) {
+		this.descricao = descricao;
 	}
 	
-	public String getNivel_acesso() {
-		return this.nivel_acesso;
-	}
+	
 }
