@@ -1,6 +1,7 @@
 package com.zeussh.gestaoLog.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zeussh.gestaoLog.domain.Registro;
@@ -103,18 +108,19 @@ public class RegistroController {
 
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "buscarPorData")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(value = "data") Date data) {
+	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(value = "dataInicio") Long dataInicio,
+			@RequestParam(value = "dataFim") Long dataFim) {
 
 		log.info("**CONTROLLER - Buscar por data");
 
-		List<Registro> registro = registroService.buscarPorData(data);
+		List<Registro> registro = registroService.buscarPorData(dataInicio, dataFim);
 
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "buscarGraficoFuncionalidade", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<String, Integer> buscarGraficoFuncionalidade() {
 
@@ -122,7 +128,7 @@ public class RegistroController {
 
 		return registroService.buscarGraficoFuncionalidade();
 	}
-	
+
 	@GetMapping(value = "buscarGraficoNivelAcesso", produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Map<String, Integer> buscarGraficoNivelAcesso() {
 
@@ -130,6 +136,26 @@ public class RegistroController {
 
 		return registroService.buscarGraficoNivelAcesso();
 	}
-	
-	
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+
+	public Map<String, String> handlerValidationException(MethodArgumentNotValidException ex) {
+
+		Map<String, String> errors = new HashMap<String, String>();
+
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+
+			String fieldName = ((FieldError) error).getField();
+
+			String errorMessage = error.getDefaultMessage();
+
+			errors.put(fieldName, errorMessage);
+
+		});
+
+		return errors;
+
+	}
 }

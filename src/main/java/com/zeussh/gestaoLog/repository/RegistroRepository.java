@@ -29,8 +29,8 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 	@Query(value = "FROM Registro r WHERE r.idUsuario IN (:idUsuario)")
 	List<Registro> buscarPorIdUsuario(Long idUsuario);
 	
-	@Query(value = "FROM Registro r WHERE r.data >= :data")
-	List<Registro> buscarPorData(Date data);
+	@Query(value = "FROM Registro r WHERE r.data BETWEEN ?1 and ?2")
+	List<Registro> buscarPorData(Date dataInicio, Date dataFim);
 	
 	@Query(value = "SELECT funcionalidade, count(*) from Registro group by funcionalidade")
 	List<Object[]> buscarGraficoFuncionalidade();

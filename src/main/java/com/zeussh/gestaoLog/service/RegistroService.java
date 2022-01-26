@@ -61,12 +61,14 @@ public class RegistroService {
 		return registroRepository.buscarPorFuncionalidade(funcionalidade);
 	}
 
-	public List<Registro> buscarPorData(Date dataHora) {
-		/*
-		 * SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy"); String stData =
-		 * format.parse(startData); String edData = format.parse(endData);
-		 */
-		return registroRepository.buscarPorData(dataHora);
+	public List<Registro> buscarPorData(Long dataInicio, Long dataFim) {
+		//Timestamp stamp = new Timestamp(dataInicio);
+		Date date = new Date(new Timestamp(dataInicio).getTime());
+		
+		Timestamp stamp2 = new Timestamp(dataFim);
+		Date date2 = new Date(stamp2.getTime());
+		return registroRepository.buscarPorData(date, date2);
+		
 	}
 
 	public Map<String, Integer> buscarGraficoFuncionalidade() {
