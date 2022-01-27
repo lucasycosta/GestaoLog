@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -63,8 +64,7 @@ public class RegistroTest {
 			log.info("Não foi possivel cadastrar");
 			Throwable cause = ((TransactionSystemException) ex).getRootCause();
 			if (cause instanceof ConstraintViolationException) {
-				Set<ConstraintViolation<?>> violations = ((ConstraintViolationException) cause)
-						.getConstraintViolations();
+				Set<ConstraintViolation<?>> violations = ((ConstraintViolationException) cause).getConstraintViolations();
 				String campo = violations.iterator().next().getPropertyPath().toString();
 				String mensagem = violations.iterator().next().getMessage();
 				log.debug(campo + ": " + mensagem);
@@ -289,5 +289,32 @@ public class RegistroTest {
 
 		log.debug("Buscar registro atraves da funcionalidade");
 		ResponseEntity<List<Registro>> registro = registroC.buscarPorFuncionalidade(EnumFuncionalidade.LOGIN);
+	}
+	
+	@Order(8)
+	@Test
+	public void devoBuscarPorData() {
+		log.info("** TEST - devoBuscarPorData");
+
+		log.debug("Buscar registro atraves da data");
+		ResponseEntity<List<Registro>> registro = registroC.buscarPorData(id, id);
+	}
+	
+	@Order(9)
+	@Test
+	public void devoGerarGraficoFuncionalidade() {
+		log.info("** TEST - devoGerarGraficoFuncionalidade");
+
+		log.debug("Gerar gráfico das funcionalidades mais usadas");
+		Map<String, Integer> registro = registroC.buscarGraficoFuncionalidade();
+	}
+	
+	@Order(10)
+	@Test
+	public void devoGerarGraficoNivelAcesso() {
+		log.info("** TEST - devoGerarGraficoNivelAcesso");
+
+		log.debug("Gerar gráfico dos niveis de acesso");
+		Map<String, Integer> registro = registroC.buscarGraficoNivelAcesso();
 	}
 }

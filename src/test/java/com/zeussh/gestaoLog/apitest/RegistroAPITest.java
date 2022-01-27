@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import com.zeussh.gestaoLog.controller.RegistroController;
 import com.zeussh.gestaoLog.domain.Registro;
 
 import io.restassured.RestAssured;
@@ -24,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class RegistroAPITest {
 	
 	private static Registro registro;
-	private static RegistroController registroc;
 	
 	@BeforeAll
 	public static void setup() {
@@ -149,7 +147,7 @@ public class RegistroAPITest {
 		log.info("**TEST - devoCadastrarRegistro");
 		log.info("Gravar Registro");
 		RestAssured.given()
-		.body("{\"idUsuario\": \"100\", \"nomeUsuario\": \"Lucas\", \"email\": \"lucas@mail.com\", \"nivelAcesso\": \"MEDICO\", \"funcionalidade\": \"LOGIN\"}")
+		.body("{\"idUsuario\": \"157\", \"nomeUsuario\": \"Ramires\", \"email\": \"rami@mail.com\", \"nivelAcesso\": \"MEDICO\", \"funcionalidade\": \"CADASTRAR_EXAME\"}")
 		.contentType(ContentType.JSON)
 	.when()
 		.post("cadastrar")
@@ -253,11 +251,21 @@ public class RegistroAPITest {
 		log.info("Buscar usuario pela data");
 		RestAssured.given()
 		.when()
-			.get("buscarPorData?dataInicio=''&dataFim=''" + registro.getData())
+			.get("buscarPorData?dataInicio=1642636800000&dataFim=1643241600000")
 		.then()
 			.log().all()
 			.statusCode(200);
 	}
+	/*
+	 * Date date = new Date();  
+       Timestamp ts=new Timestamp(date.getTime());  
+       
+       Calendar cal = Calendar.getInstance(); 
+	   cal.setTime(dataTeste ); 
+	   cal.add(Calendar.DATE, 1);
+	   dataTeste = cal.getTime();
+	 */
+	
 	
 	@Test
 	@Order(10)
@@ -267,22 +275,24 @@ public class RegistroAPITest {
 		log.info("Gerar grafico de funcionalidade");
 		RestAssured.given()
 		.when()
-			.get("buscarGraficoFuncionalidade" + registroc.buscarGraficoFuncionalidade())
+			.get("buscarGraficoFuncionalidade")
 		.then()
 			.log().all()
 			.statusCode(200);
 	}
+	
 	@Test
-	@Order(10)
+	@Order(11)
 	public void devoBuscarGraficoNivelAcesso() {
 		log.info("** Test - devoBuscarGraficoNivelAcesso");
 
 		log.info("Gerar grafico de funcionalidade");
 		RestAssured.given()
 		.when()
-			.get("buscarGraficoNivelAcesso" + registro.getNivelAcesso())
+			.get("buscarGraficoNivelAcesso")
 		.then()
 			.log().all()
 			.statusCode(200);
 	}
+	
 }
