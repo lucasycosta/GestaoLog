@@ -87,8 +87,7 @@ public class RegistroController {
 
 	@GetMapping(value = "buscarPorNivel")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorNivel(
-			@RequestParam(name = "nivelAcesso") EnumNivelAcesso nivelAcesso) {
+	public ResponseEntity<List<Registro>> buscarPorNivel(@RequestParam(name = "nivelAcesso") EnumNivelAcesso nivelAcesso) {
 
 		log.info("**CONTROLLER - Buscar por nivel de acesso");
 
@@ -99,8 +98,7 @@ public class RegistroController {
 
 	@GetMapping(value = "buscarPorFuncionalidade")
 	@ResponseBody
-	public ResponseEntity<List<Registro>> buscarPorFuncionalidade(
-			@RequestParam(name = "funcionalidade") EnumFuncionalidade funcionalidade) {
+	public ResponseEntity<List<Registro>> buscarPorFuncionalidade(@RequestParam(name = "funcionalidade") EnumFuncionalidade funcionalidade) {
 
 		log.info("**CONTROLLER - Buscar por funcionalidade");
 
@@ -112,7 +110,7 @@ public class RegistroController {
 	@GetMapping(value = "buscarPorData")
 	@ResponseBody
 	public ResponseEntity<List<Registro>> buscarPorData(@RequestParam(value = "dataInicio") Long dataInicio,
-			@RequestParam(value = "dataFim") Long dataFim) {
+														@RequestParam(value = "dataFim") Long dataFim) {
 
 		log.info("**CONTROLLER - Buscar por data");
 
@@ -122,21 +120,40 @@ public class RegistroController {
 	}
 
 	@GetMapping(value = "buscarGraficoFuncionalidade", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Map<String, Integer> buscarGraficoFuncionalidade() {
+	public @ResponseBody Map<String, Integer> buscarGraficoFuncionalidade(@RequestParam(value = "dataInicio") Long dataInicio,
+																		  @RequestParam(value = "dataFim") Long dataFim) {
 
 		log.info("**CONTROLLER - Gráfico de funcionalidades");
 
-		return registroService.buscarGraficoFuncionalidade();
+		return registroService.buscarGraficoFuncionalidade(dataInicio, dataFim);
 	}
 
 	@GetMapping(value = "buscarGraficoNivelAcesso", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Map<String, Integer> buscarGraficoNivelAcesso() {
+	public @ResponseBody Map<String, Integer> buscarGraficoNivelAcesso(@RequestParam(value = "dataInicio") Long dataInicio,
+			  														   @RequestParam(value = "dataFim") Long dataFim) {
 
 		log.info("**CONTROLLER - Gráfico de niveis de acesso");
 
-		return registroService.buscarGraficoNivelAcesso();
+		return registroService.buscarGraficoNivelAcesso(dataInicio, dataFim);
 	}
 
+	
+	@GetMapping(value = "buscaCombinada")
+	@ResponseBody
+	public ResponseEntity<List<Registro>>buscaCombinada(@RequestParam(value = "idUsuario") Long idUsuario,
+								        				 @RequestParam(value = "nomeUsuario") String nomeUsuario,
+														 @RequestParam(value = "email") String email,
+														 @RequestParam(value = "funcionalidade") EnumFuncionalidade funcionalidade,
+														 @RequestParam(value = "nivelAcesso") EnumNivelAcesso nivelAcesso) {
+
+		log.info("**CONTROLLER - Busca com filtros combinados");
+
+		List<Registro> registro = registroService.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
+
+		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
+	}
+	
+	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handlerValidationException(MethodArgumentNotValidException ex) {

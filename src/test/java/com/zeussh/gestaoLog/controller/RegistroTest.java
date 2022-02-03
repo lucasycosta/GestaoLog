@@ -306,7 +306,7 @@ public class RegistroTest {
 		log.info("** TEST - devoGerarGraficoFuncionalidade");
 
 		log.debug("Gerar gráfico das funcionalidades mais usadas");
-		Map<String, Integer> registro = registroC.buscarGraficoFuncionalidade();
+		Map<String, Integer> registro = registroC.buscarGraficoFuncionalidade(id, id);
 	}
 	
 	@Order(10)
@@ -315,6 +315,6 @@ public class RegistroTest {
 		log.info("** TEST - devoGerarGraficoNivelAcesso");
 
 		log.debug("Gerar gráfico dos niveis de acesso");
-		Map<String, Integer> registro = registroC.buscarGraficoNivelAcesso();
+		Map<String, Integer> registro = registroC.buscarGraficoNivelAcesso(id, id);
 	}
 }

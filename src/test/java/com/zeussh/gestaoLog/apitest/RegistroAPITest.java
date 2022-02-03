@@ -275,7 +275,7 @@ public class RegistroAPITest {
 		log.info("Gerar grafico de funcionalidade");
 		RestAssured.given()
 		.when()
-			.get("buscarGraficoFuncionalidade")
+			.get("buscarGraficoFuncionalidade?dataInicio=1642464000000&dataFim=1643500800000")
 		.then()
 			.log().all()
 			.statusCode(200);
@@ -286,10 +286,10 @@ public class RegistroAPITest {
 	public void devoBuscarGraficoNivelAcesso() {
 		log.info("** Test - devoBuscarGraficoNivelAcesso");
 
-		log.info("Gerar grafico de funcionalidade");
+		log.info("Gerar grafico de nivel de acesso");
 		RestAssured.given()
 		.when()
-			.get("buscarGraficoNivelAcesso")
+			.get("buscarGraficoNivelAcesso?dataInicio=1642464000000&dataFim=1643500800000")
 		.then()
 			.log().all()
 			.statusCode(200);

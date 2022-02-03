@@ -64,17 +64,21 @@ public class RegistroService {
 	public List<Registro> buscarPorData(Long dataInicio, Long dataFim) {
 		//Timestamp stamp = new Timestamp(dataInicio);
 		Date date = new Date(new Timestamp(dataInicio).getTime());
-		
 		Timestamp stamp2 = new Timestamp(dataFim);
 		Date date2 = new Date(stamp2.getTime());
 		return registroRepository.buscarPorData(date, date2);
 		
 	}
 
-	public Map<String, Integer> buscarGraficoFuncionalidade() {
-
+	public Map<String, Integer> buscarGraficoFuncionalidade(Long dataInicio, Long dataFim) {
+		
+		Date date = new Date(new Timestamp(dataInicio).getTime());
+		Timestamp stamp2 = new Timestamp(dataFim);
+		Date date2 = new Date(stamp2.getTime());
+		registroRepository.buscarPorData(date, date2);
+		
 		Map<String, Integer> mappedResult = new HashMap<>();
-		List<Object[]> queryResult = registroRepository.buscarGraficoFuncionalidade();
+		List<Object[]> queryResult = registroRepository.buscarGraficoFuncionalidade(date, date2);
 		for (Object[] obj : queryResult) {
 			EnumFuncionalidade funcionalidade = (EnumFuncionalidade) obj[0];
 			Integer contador = Integer.parseInt(obj[1].toString());
@@ -84,9 +88,15 @@ public class RegistroService {
 		return mappedResult;
 	}
 
-	public Map<String, Integer> buscarGraficoNivelAcesso() {
+	public Map<String, Integer> buscarGraficoNivelAcesso(Long dataInicio, Long dataFim) {
+		
+		Date date = new Date(new Timestamp(dataInicio).getTime());
+		Timestamp stamp2 = new Timestamp(dataFim);
+		Date date2 = new Date(stamp2.getTime());
+		registroRepository.buscarPorData(date, date2);
+		
 		Map<String, Integer> mappedResult = new HashMap<>();
-		List<Object[]> queryResult = registroRepository.buscarGraficoNivelAcesso();
+		List<Object[]> queryResult = registroRepository.buscarGraficoNivelAcesso(date, date2);
 		for (Object[] obj : queryResult) {
 			EnumNivelAcesso nivelAcesso = (EnumNivelAcesso) obj[0];
 			Integer contador = Integer.parseInt(obj[1].toString());
@@ -95,4 +105,13 @@ public class RegistroService {
 
 		return mappedResult;
 	}
+	
+	public List<Registro> buscaCombinada(Long idUsuario,
+										 String nomeUsuario, 
+										 String email, 										 
+										 EnumFuncionalidade funcionalidade, 
+										 EnumNivelAcesso nivelAcesso) {
+		return registroRepository.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
+	}
+	
 }

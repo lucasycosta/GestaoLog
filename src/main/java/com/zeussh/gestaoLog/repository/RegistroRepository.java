@@ -20,21 +20,39 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 	@Query(value = "FROM Registro r WHERE r.email LIKE %?1%")
 	List<Registro> buscarPorEmail(String email);
 	
-	@Query(value = "FROM Registro r WHERE nivelAcesso IN (:nivelAcesso)")
+	@Query(value = "FROM Registro r WHERE nivelAcesso = :nivelAcesso ")
 	List<Registro> buscarPorNivel(EnumNivelAcesso nivelAcesso);
 	
-	@Query(value = "FROM Registro r WHERE funcionalidade IN (:funcionalidade)")
+	@Query(value = "FROM Registro r WHERE funcionalidade = :funcionalidade ")
 	List<Registro> buscarPorFuncionalidade(EnumFuncionalidade funcionalidade);
 	
-	@Query(value = "FROM Registro r WHERE r.idUsuario IN (:idUsuario)")
+	@Query(value = "FROM Registro r WHERE r.idUsuario = :idUsuario ")
 	List<Registro> buscarPorIdUsuario(Long idUsuario);
 	
 	@Query(value = "FROM Registro r WHERE r.data BETWEEN ?1 and ?2")
 	List<Registro> buscarPorData(Date dataInicio, Date dataFim);
 	
-	@Query(value = "SELECT funcionalidade, count(*) from Registro group by funcionalidade")
-	List<Object[]> buscarGraficoFuncionalidade();
+	@Query(value = "SELECT funcionalidade, COUNT(*) FROM Registro r "
+				 + "WHERE r.data BETWEEN ?1 and ?2 "
+				 + "GROUP BY funcionalidade ")
+	List<Object[]> buscarGraficoFuncionalidade(Date dataInicio, Date dataFim);
 	
-	@Query(value = "SELECT nivelAcesso, count(*) from Registro group by nivelAcesso")
-	List<Object[]> buscarGraficoNivelAcesso();
+	@Query(value = "SELECT nivelAcesso, COUNT(*) FROM Registro r "
+				 + "WHERE r.data BETWEEN ?1 and ?2 "
+				 + "GROUP BY nivelAcesso")
+	List<Object[]> buscarGraficoNivelAcesso(Date dataInicio, Date dataFim);
+	
+	@Query(value = "FROM Registro r "
+			 	 + "WHERE r.idUsuario = :idUsuario "
+			 	       + "and r.nomeUsuario LIKE %:nomeUsuario% "
+			 	       + "and r.email LIKE %:email% "
+			 	       + "and r.funcionalidade = :funcionalidade "
+			 	       + "and r.nivelAcesso = :nivelAcesso ")
+	List<Registro> buscaCombinada(Long idUsuario, 
+								  String nomeUsuario, 
+								  String email, 
+								  EnumFuncionalidade funcionalidade, 
+								  EnumNivelAcesso nivelAcesso);
+	
 }
+
