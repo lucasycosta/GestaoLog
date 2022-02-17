@@ -41,7 +41,7 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 				 + "WHERE r.data BETWEEN ?1 and ?2 "
 				 + "GROUP BY nivelAcesso")
 	List<Object[]> buscarGraficoNivelAcesso(Date dataInicio, Date dataFim);
-	
+	/*
 	@Query(value = "FROM Registro r "
 			 	 + "WHERE r.idUsuario = :idUsuario "
 			 	       + "and r.nomeUsuario LIKE %:nomeUsuario% "
@@ -53,6 +53,7 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 								  String email, 
 								  EnumFuncionalidade funcionalidade, 
 								  EnumNivelAcesso nivelAcesso);
+								  */
 	
 }
 

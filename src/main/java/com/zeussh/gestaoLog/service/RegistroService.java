@@ -1,6 +1,7 @@
 package com.zeussh.gestaoLog.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +63,7 @@ public class RegistroService {
 	}
 
 	public List<Registro> buscarPorData(Long dataInicio, Long dataFim) {
-		//Timestamp stamp = new Timestamp(dataInicio);
+		
 		Date date = new Date(new Timestamp(dataInicio).getTime());
 		Timestamp stamp2 = new Timestamp(dataFim);
 		Date date2 = new Date(stamp2.getTime());
@@ -111,7 +112,37 @@ public class RegistroService {
 										 String email, 										 
 										 EnumFuncionalidade funcionalidade, 
 										 EnumNivelAcesso nivelAcesso) {
-		return registroRepository.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
+		
+		List<Registro> resultado = new ArrayList<Registro>();
+		
+		if(idUsuario != null) {
+			List<Registro> listaIdUsuario = registroRepository.buscarPorIdUsuario(idUsuario);
+			resultado.containsAll(listaIdUsuario);	
+		} 
+		
+		if(nomeUsuario != null) {
+			List<Registro> listaNomeUsuario = registroRepository.buscarPorNome(nomeUsuario);
+			resultado.retainAll(listaNomeUsuario);
+		}
+		
+		if(email != null) {
+			List<Registro> listaEmail = registroRepository.buscarPorEmail(email);
+			resultado.retainAll(listaEmail);
+		}
+		
+		if(nivelAcesso != null) {
+			List<Registro> listaNivelAcesso = registroRepository.buscarPorNivel(nivelAcesso);
+			resultado.retainAll(listaNivelAcesso);
+		}
+		
+		if(funcionalidade != null) {
+			List<Registro> listaFuncionalidade = registroRepository.buscarPorFuncionalidade(funcionalidade);
+			resultado.retainAll(listaFuncionalidade);
+		}
+		
+		return resultado;
+		
+		//return registroRepository.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
 	}
 	
 }
