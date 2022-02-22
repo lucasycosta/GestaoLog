@@ -1,4 +1,5 @@
- package com.zeussh.gestaoLog.apitest;
+
+package com.zeussh.gestaoLog.apitest;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @TestMethodOrder(OrderAnnotation.class)
 public class RegistroAPITest {
-	
+
 	private static Registro registro;
 	
 	@BeforeAll
@@ -58,7 +59,7 @@ public class RegistroAPITest {
 		.then()
 			.log().all()
 			.statusCode(400)
-			.body("nomeUsuario", CoreMatchers.is("Este campo é obrigatorio"));
+			.body("nomeUsuario", CoreMatchers.is("Nome de usuário invalido"));
 	}
 	
 	@Test
@@ -264,7 +265,7 @@ public class RegistroAPITest {
 	   cal.setTime(dataTeste ); 
 	   cal.add(Calendar.DATE, 1);
 	   dataTeste = cal.getTime();
-	 */
+	*/
 	
 	
 	@Test
@@ -294,5 +295,7 @@ public class RegistroAPITest {
 			.log().all()
 			.statusCode(200);
 	}
+	 
 	
 }
+

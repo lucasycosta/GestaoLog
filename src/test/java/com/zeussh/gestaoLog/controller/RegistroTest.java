@@ -93,7 +93,7 @@ public class RegistroTest {
 				String campo = violations.iterator().next().getPropertyPath().toString();
 				String mensagem = violations.iterator().next().getMessage();
 				log.debug(campo + ": " + mensagem);
-				assertEquals("Este campo é obrigatorio", mensagem);
+				assertEquals("Nome de usuário invalido", mensagem);
 			}
 		}
 	}
