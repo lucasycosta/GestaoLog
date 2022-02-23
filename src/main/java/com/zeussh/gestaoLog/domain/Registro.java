@@ -45,7 +45,7 @@ public class Registro implements Serializable{
 	private Long idUsuario;
 	
 	@Column(name = "nome_usuario")
-	@NotBlank(message = "Nome de usuário invalido")
+	@NotBlank(message = "Nome de usuário em branco")
 	@Pattern(regexp = "^[A-Z]+(.)*", message = "Nome de usuário invalido")
 	private String nomeUsuario;
 	

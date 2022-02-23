@@ -59,7 +59,7 @@ public class RegistroAPITest {
 		.then()
 			.log().all()
 			.statusCode(400)
-			.body("nomeUsuario", CoreMatchers.is("Nome de usuário invalido"));
+			.body("nomeUsuario", CoreMatchers.is("Nome de usuário em branco"));
 	}
 	
 	@Test
@@ -294,8 +294,6 @@ public class RegistroAPITest {
 		.then()
 			.log().all()
 			.statusCode(200);
-	}
-	 
-	
+	}	
 }
 

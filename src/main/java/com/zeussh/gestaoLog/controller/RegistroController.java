@@ -152,7 +152,7 @@ public class RegistroController {
 
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
-	
+	*/
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -166,5 +166,5 @@ public class RegistroController {
 		return errors;
 
 	}
-	*/
+	
 }
