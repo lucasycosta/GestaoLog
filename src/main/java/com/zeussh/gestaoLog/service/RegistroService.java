@@ -106,7 +106,7 @@ public class RegistroService {
 
 		return mappedResult;
 	}
-	
+	/*
 	public List<Registro> buscaCombinada(Long idUsuario,
 										 String nomeUsuario, 
 										 String email, 										 
@@ -144,5 +144,5 @@ public class RegistroService {
 		
 		//return registroRepository.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
 	}
-	
+	*/
 }

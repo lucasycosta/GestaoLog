@@ -137,7 +137,7 @@ public class RegistroController {
 		return registroService.buscarGraficoNivelAcesso(dataInicio, dataFim);
 	}
 
-	
+	/*
 	@GetMapping(value = "buscaCombinada")
 	@ResponseBody
 	public ResponseEntity<List<Registro>>buscaCombinada(@RequestParam(value = "idUsuario") Long idUsuario,
@@ -166,4 +166,5 @@ public class RegistroController {
 		return errors;
 
 	}
+	*/
 }
