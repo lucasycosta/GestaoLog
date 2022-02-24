@@ -133,7 +133,7 @@ public class RegistroTeste {
 				String campo = violations.iterator().next().getPropertyPath().toString();
 				String mensagem = violations.iterator().next().getMessage();
 				log.debug(campo + ": " + mensagem);
-				assertEquals("Nome de usuário em branco", mensagem);
+				assertEquals("Nome de usuário invalido", mensagem);
 			}
 		}
 	}
@@ -503,18 +503,20 @@ public class RegistroTeste {
 	// --------------------------------------------------------------------------------------
 	// TESTE - GERAR GRAFICO DE NIVEL DE ACESSO
 	// ---------------------------------------------------------------------------------------
-	
+	/*
 	@Test
+	@Order(5)
 	@Quando("selecionar um intervalo de datas")
 	public void selecionar_um_intervalo_de_datas() {
 		log.info("E - selecionar um intervalo de datas");
 	}
 
 	@Test
+	@Order(5)
 	@Entao("sera apresentado um grafico com a quantidade de acesso dos nivel de acesso")
 	public void sera_apresentado_um_grafico_com_a_quantidade_de_acesso_dos_nivel_de_acesso() {
 	    log.info("ENTAO - sera apresentado um grafico com a quantidade de acesso dos nivel de acesso");
 	    Map<String, Integer> registro = registroController.buscarGraficoNivelAcesso(id, id);
 	}
-	
+	*/
 }
