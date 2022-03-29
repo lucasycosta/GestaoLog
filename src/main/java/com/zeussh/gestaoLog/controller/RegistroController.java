@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -153,6 +154,15 @@ public class RegistroController {
 		return new ResponseEntity<List<Registro>>(registro, HttpStatus.OK);
 	}
 	*/
+	
+	@GetMapping(value = "buscarTodosPaginando", produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Page<Registro> buscarTodosPaginando(@RequestParam (value = "item") Integer item, 
+											   @RequestParam (value = "itemPagina") Integer itemPorPagina){
+		
+		log.info("**CONTROLLER - Buscar com paginação");
+		
+		return registroService.buscarTodosPaginando(item, itemPorPagina);
+	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)

@@ -3,6 +3,7 @@ package com.zeussh.gestaoLog.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,7 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 				 + "WHERE r.data BETWEEN ?1 and ?2 "
 				 + "GROUP BY nivelAcesso")
 	List<Object[]> buscarGraficoNivelAcesso(Date dataInicio, Date dataFim);
+	
 	/*
 	@Query(value = "FROM Registro r "
 			 	 + "WHERE r.idUsuario = :idUsuario "
@@ -53,7 +55,10 @@ public interface RegistroRepository extends PagingAndSortingRepository<Registro,
 								  String email, 
 								  EnumFuncionalidade funcionalidade, 
 								  EnumNivelAcesso nivelAcesso);
-								  */
 	
+	@Query(value = "FROM Registro r")
+	Page<Registro> buscarTodosPaginando(Integer item, Integer itemPorPagina);
+										  */
+
 }
 

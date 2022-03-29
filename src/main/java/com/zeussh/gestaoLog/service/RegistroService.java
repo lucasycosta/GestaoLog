@@ -1,7 +1,6 @@
 package com.zeussh.gestaoLog.service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +9,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.zeussh.gestaoLog.domain.Registro;
@@ -17,12 +18,15 @@ import com.zeussh.gestaoLog.domain.enums.EnumFuncionalidade;
 import com.zeussh.gestaoLog.domain.enums.EnumNivelAcesso;
 import com.zeussh.gestaoLog.repository.RegistroRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class RegistroService {
 
 	@Autowired
 	public RegistroRepository registroRepository;
-
+	
 	public Registro cadastrar(@Valid Registro registro) {
 
 		Timestamp stamp = new Timestamp(System.currentTimeMillis());
@@ -145,4 +149,14 @@ public class RegistroService {
 		//return registroRepository.buscaCombinada(idUsuario, nomeUsuario, email, funcionalidade, nivelAcesso);
 	}
 	*/
+	
+	
+	
+	public Page<Registro> buscarTodosPaginando(Integer item, Integer itemPorPagina) {
+		log.debug("** SERVICE - BUSCAR TODOS POR PAGINACAO");
+		PageRequest pageRequest = PageRequest.of(item, itemPorPagina);
+		return registroRepository.findAll(pageRequest);
+	}
+
+	
 }
